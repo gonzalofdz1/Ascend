@@ -636,8 +636,52 @@ let S={
 let selCat=null, selType='expense', editingTxId=null, editSelCat=null, planView='day';
 let qlSelCat=null;
 
-function save(){localStorage.setItem('bgt_v5',JSON.stringify(S))}
-function load(){const r=localStorage.getItem('bgt_v5');if(r){const p=JSON.parse(r);Object.assign(S,p)}else seedData()}
+// ══════════ SUPABASE SYNC ══════════
+const SB_URL='https://wzycrecrfwbldryroeuo.supabase.co';
+const SB_KEY='sb_publishable_cuWVZE3ML7J-nbElDkKuEg_o8iQGT04';
+let syncTimeout=null;
+
+async function sbGet(){
+  try{
+    const r=await fetch(`${SB_URL}/rest/v1/state?id=eq.main&select=data`,{
+      headers:{'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`}
+    });
+    if(!r.ok)return null;
+    const j=await r.json();
+    return j[0]?.data||null;
+  }catch{return null}
+}
+
+async function sbSet(data){
+  try{
+    await fetch(`${SB_URL}/rest/v1/state?id=eq.main`,{
+      method:'PATCH',
+      headers:{'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`,'Content-Type':'application/json','Prefer':'return=minimal'},
+      body:JSON.stringify({data,updated_at:new Date().toISOString()})
+    });
+  }catch{}
+}
+
+function save(){
+  localStorage.setItem('bgt_v5',JSON.stringify(S));
+  // Debounce cloud sync — wait 800ms after last save before pushing
+  clearTimeout(syncTimeout);
+  syncTimeout=setTimeout(()=>sbSet(JSON.parse(JSON.stringify(S))),800);
+}
+
+async function load(){
+  // Try local first so app loads instantly
+  const local=localStorage.getItem('bgt_v5');
+  if(local){const p=JSON.parse(local);Object.assign(S,p)}else{seedData()}
+  // Then pull from cloud and override if newer/different
+  const cloud=await sbGet();
+  if(cloud&&cloud.transactions){
+    Object.assign(S,cloud);
+    localStorage.setItem('bgt_v5',JSON.stringify(S));
+    renderDashboard();buildHistoryMonthSelect();renderHistory();renderPlan();
+    showToast('Sincronizado ☁️');
+  }
+}
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,5)}
 
 function seedData(){
@@ -668,8 +712,8 @@ function seedData(){
 }
 
 // ══════════ INIT ══════════
-function init(){
-  load();
+async function init(){
+  await load();
   setDefaultDate();
   updateHeaderMonth();
   buildCatGrid();
