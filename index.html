@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Budget">
+<meta name="apple-mobile-web-app-title" content="Ascend">
 <meta name="theme-color" content="#13140f">
-<title>Budget</title>
+<title>Ascend</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -19,7 +19,7 @@
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);height:100dvh;overflow:hidden;display:flex;flex-direction:column;user-select:none;max-width:100vw}
 ::-webkit-scrollbar{width:0}
-*{max-width:100%}
+*{max-width:100%;min-width:0}
 img,svg{max-width:100%}
 
 /* HEADER */
@@ -27,7 +27,7 @@ img,svg{max-width:100%}
 .hdr-l{display:flex;flex-direction:column;gap:2px}
 .hdr-title{font-size:18px;font-weight:700;letter-spacing:-.02em}
 .hdr-sub{font-family:'DM Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:.06em}
-.hdr-btn{background:var(--surface2);border:1px solid var(--border2);color:var(--muted);width:36px;height:36px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;transition:all .15s}
+.hdr-btn{background:var(--surface2);border:1px solid var(--border2);color:var(--muted);width:36px;height:36px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;transition:all .15s;flex-shrink:0}
 .hdr-btn:active{background:var(--surface3);transform:scale(.93)}
 
 /* TABS */
@@ -54,8 +54,8 @@ img,svg{max-width:100%}
 .finput::placeholder{color:var(--muted)}
 .amtrow{display:flex;align-items:center;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--r);overflow:hidden;transition:border-color .2s}
 .amtrow:focus-within{border-color:var(--accent)}
-.peso{padding:13px 10px 13px 15px;font-family:'DM Mono',monospace;font-size:15px;color:var(--accent)}
-.amtin{flex:1;background:transparent;border:none;padding:13px 15px 13px 0;color:var(--text);font-family:'DM Mono',monospace;font-size:15px;outline:none;-webkit-appearance:none}
+.peso{padding:13px 10px 13px 15px;font-family:'DM Mono',monospace;font-size:15px;color:var(--accent);flex-shrink:0}
+.amtin{flex:1;background:transparent;border:none;padding:13px 15px 13px 0;color:var(--text);font-family:'DM Mono',monospace;font-size:15px;outline:none;-webkit-appearance:none;min-width:0}
 .amtin::placeholder{color:var(--muted)}
 
 /* PILLS */
@@ -71,7 +71,7 @@ img,svg{max-width:100%}
 .cchip.on{border-color:var(--cc);background:color-mix(in srgb,var(--cc) 18%,transparent)}
 .cchip.req-err{border-color:var(--danger)!important;animation:shake .3s}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
-.cico{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px}
+.cico{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
 .clbl{font-size:8px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
 .cchip.on .clbl{color:var(--text)}
 
@@ -102,20 +102,21 @@ img,svg{max-width:100%}
 .legitem{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--muted)}
 .legdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 
-/* STATS */
-.stats2{display:grid;grid-template-columns:1fr 1fr;gap:9px;width:100%}
-.scard{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px}
-.scard.full{grid-column:1/-1}
+/* STATS — single column layout to prevent overflow */
+.stats-col{display:flex;flex-direction:column;gap:9px;width:100%}
+.stats-row{display:grid;grid-template-columns:1fr 1fr;gap:9px;width:100%}
+.scard{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;overflow:hidden;min-width:0}
 .slbl{font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
 .sval{font-family:'DM Mono',monospace;font-size:18px;font-weight:500;line-height:1}
 .sval.neg{color:var(--danger)}.sval.pos{color:var(--success)}.sval.acc{color:var(--accent)}
-.ssub{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-top:4px}
+.ssub{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-top:4px;word-break:break-word}
 
-/* SAVINGS EDITOR */
-.savbox{display:flex;align-items:center;gap:6px;margin-top:6px;width:100%}
-.savbtn{background:var(--surface2);border:1px solid var(--border2);color:var(--text);width:32px;height:32px;border-radius:10px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
+/* SAVINGS EDITOR — contained, never overflows */
+.savbox{display:flex;align-items:center;gap:5px;margin-top:8px;width:100%}
+.savbtn{background:var(--surface2);border:1px solid var(--border2);color:var(--text);width:30px;height:30px;min-width:30px;border-radius:9px;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0;padding:0}
 .savbtn:active{transform:scale(.9)}
-.savin{flex:1;min-width:0;background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:7px 8px;color:var(--text);font-family:'DM Mono',monospace;font-size:13px;outline:none;text-align:center;-webkit-appearance:none}
+.savbtn.ok{width:auto;min-width:28px;padding:0 9px;font-size:10px;font-weight:700;letter-spacing:.06em}
+.savin{flex:1;min-width:0;background:var(--surface2);border:1px solid var(--border2);border-radius:9px;padding:7px 6px;color:var(--text);font-family:'DM Mono',monospace;font-size:12px;outline:none;text-align:center;-webkit-appearance:none}
 .savin:focus{border-color:var(--accent)}
 
 /* SEC TITLE */
@@ -124,11 +125,11 @@ img,svg{max-width:100%}
 /* BUD BARS */
 .buditem{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:11px 13px}
 .budtop{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
-.budleft{display:flex;align-items:center;gap:8px}
+.budleft{display:flex;align-items:center;gap:8px;min-width:0}
 .budico{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
-.budname{font-size:12px;font-weight:600}
+.budname{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .budname.over{color:var(--danger)}.budname.warn{color:#f59e0b}
-.budamts{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted)}
+.budamts{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);flex-shrink:0}
 .budamts b{color:var(--text)}
 .barbg{height:4px;background:var(--surface2);border-radius:4px;overflow:hidden}
 .barfill{height:100%;border-radius:4px;transition:width .5s cubic-bezier(.4,0,.2,1)}
@@ -136,8 +137,8 @@ img,svg{max-width:100%}
 /* SUBS */
 .subitem{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:11px 13px;display:flex;align-items:center;gap:11px}
 .subico{width:30px;height:30px;border-radius:9px;background:var(--surface3);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
-.subinfo{flex:1}.subname{font-size:12px;font-weight:600}.submeta{font-size:10px;color:var(--muted);margin-top:1px;font-family:'DM Mono',monospace}
-.subamt{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;color:var(--purple)}
+.subinfo{flex:1;min-width:0}.subname{font-size:12px;font-weight:600}.submeta{font-size:10px;color:var(--muted);margin-top:1px;font-family:'DM Mono',monospace}
+.subamt{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;color:var(--purple);flex-shrink:0}
 
 /* UDEM */
 .udemcard{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:14px}
@@ -152,9 +153,9 @@ img,svg{max-width:100%}
 /* HISTORY */
 .histbar{display:flex;gap:9px;align-items:center}
 .histsel{flex:1;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--r);padding:10px 13px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;outline:none;-webkit-appearance:none;cursor:pointer}
-.expbtn{background:var(--surface2);border:1px solid var(--accent);color:var(--accent);font-family:'DM Sans',sans-serif;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:10px 12px;border-radius:var(--r);cursor:pointer;white-space:nowrap}
+.expbtn{background:var(--surface2);border:1px solid var(--accent);color:var(--accent);font-family:'DM Sans',sans-serif;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:10px 12px;border-radius:var(--r);cursor:pointer;white-space:nowrap;flex-shrink:0}
 .chips3{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
-.chip3{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:9px;text-align:center}
+.chip3{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:9px;text-align:center;min-width:0}
 .chip3l{font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
 .chip3v{font-family:'DM Mono',monospace;font-size:12px;font-weight:500}
 
@@ -191,7 +192,7 @@ img,svg{max-width:100%}
 .day-brow-input{background:var(--surface2);border:1px solid var(--border2);border-radius:9px;padding:7px 10px;color:var(--text);font-family:'DM Mono',monospace;font-size:13px;outline:none;width:90px;text-align:right;-webkit-appearance:none}
 .day-brow-input:focus{border-color:var(--accent)}
 .week-summary{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
-.wday{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:5px 2px;text-align:center;display:flex;flex-direction:column;gap:2px}
+.wday{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:5px 2px;text-align:center;display:flex;flex-direction:column;gap:2px;min-width:0}
 .wday.today{border-color:var(--accent)}
 .wdname{font-size:7px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;color:var(--muted)}
 .wdamt{font-family:'DM Mono',monospace;font-size:8px;font-weight:500}
@@ -219,20 +220,20 @@ img,svg{max-width:100%}
 .bkv.g{color:var(--success)}.bkv.r{color:var(--danger)}.bkv.a{color:var(--accent)}
 .csrow{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:10px 12px;display:flex;align-items:center;gap:9px}
 .csdot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
-.csname{flex:1;font-size:12px;font-weight:600}
-.csinput{background:var(--surface3);border:1px solid var(--border2);border-radius:9px;padding:7px 10px;color:var(--text);font-family:'DM Mono',monospace;font-size:13px;outline:none;width:90px;text-align:right;-webkit-appearance:none}
+.csname{flex:1;font-size:12px;font-weight:600;min-width:0}
+.csinput{background:var(--surface3);border:1px solid var(--border2);border-radius:9px;padding:7px 10px;color:var(--text);font-family:'DM Mono',monospace;font-size:13px;outline:none;width:90px;text-align:right;-webkit-appearance:none;flex-shrink:0}
 .csinput:focus{border-color:var(--accent)}
-.icondel{background:none;border:none;color:var(--muted);font-size:16px;cursor:pointer;padding:2px 5px}
+.icondel{background:none;border:none;color:var(--muted);font-size:16px;cursor:pointer;padding:2px 5px;flex-shrink:0}
 .addbox{background:var(--surface2);border:1px solid var(--border2);border-radius:var(--r);padding:13px;display:flex;flex-direction:column;gap:9px}
 .addtitle{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
 .minin{background:var(--surface3);border:1px solid var(--border2);border-radius:10px;padding:9px 11px;color:var(--text);font-family:'DM Mono',monospace;font-size:13px;outline:none;width:100%;-webkit-appearance:none}
 .minin:focus{border-color:var(--accent)}.minin::placeholder{color:var(--muted)}
 .minisel{background:var(--surface3);border:1px solid var(--border2);border-radius:10px;padding:9px 11px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;outline:none;width:100%;-webkit-appearance:none;cursor:pointer}
-.row2{display:flex;gap:7px}.row2 .minin,.row2 .minisel{flex:1}
+.row2{display:flex;gap:7px}.row2 .minin,.row2 .minisel{flex:1;min-width:0}
 .btnadd{background:var(--surface3);border:1px solid var(--accent);color:var(--accent);font-family:'DM Sans',sans-serif;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:9px;border-radius:10px;cursor:pointer;width:100%;transition:all .15s}
 .btnadd:active{transform:scale(.97)}
 .ssrow{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:10px 12px;display:flex;align-items:center;gap:9px}
-.ssinfo{flex:1}.ssname{font-size:12px;font-weight:600}.ssmeta{font-size:9px;color:var(--muted);margin-top:2px;font-family:'DM Mono',monospace}
+.ssinfo{flex:1;min-width:0}.ssname{font-size:12px;font-weight:600}.ssmeta{font-size:9px;color:var(--muted);margin-top:2px;font-family:'DM Mono',monospace}
 .divider{height:1px;background:var(--border);margin:2px 0}
 
 /* EDIT MODAL */
@@ -241,6 +242,24 @@ img,svg{max-width:100%}
 .edit-sheet{width:100%;background:var(--surface);border-radius:22px 22px 0 0;padding:20px 16px;padding-bottom:max(24px,env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:12px;transform:translateY(100%);transition:transform .35s cubic-bezier(.4,0,.2,1)}
 .edit-modal-bg.open .edit-sheet{transform:translateY(0)}
 .edit-title{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+
+/* QUICK LOG MODAL */
+.ql-modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:400;opacity:0;pointer-events:none;transition:opacity .25s;display:flex;align-items:flex-end}
+.ql-modal-bg.open{opacity:1;pointer-events:all}
+.ql-sheet{width:100%;background:var(--bg);border-radius:22px 22px 0 0;padding:20px 16px;padding-bottom:max(28px,env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:14px;transform:translateY(100%);transition:transform .3s cubic-bezier(.4,0,.2,1)}
+.ql-modal-bg.open .ql-sheet{transform:translateY(0)}
+.ql-title{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.ql-amount-row{display:flex;align-items:center;background:var(--surface);border:1.5px solid var(--accent);border-radius:18px;overflow:hidden}
+.ql-peso{padding:18px 12px 18px 18px;font-family:'DM Mono',monospace;font-size:28px;color:var(--accent);flex-shrink:0}
+.ql-input{flex:1;background:transparent;border:none;padding:18px 18px 18px 0;color:var(--text);font-family:'DM Mono',monospace;font-size:28px;outline:none;-webkit-appearance:none;min-width:0}
+.ql-input::placeholder{color:var(--muted)}
+.ql-catgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.ql-cchip{display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 4px;border-radius:14px;background:var(--surface);border:2px solid transparent;cursor:pointer;transition:all .15s;position:relative}
+.ql-cchip.on{border-color:var(--cc);background:color-mix(in srgb,var(--cc) 22%,transparent)}
+.ql-cico{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.ql-clbl{font-size:8px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.ql-cchip.on .ql-clbl{color:var(--text)}
+.ql-hint{font-size:10px;color:var(--muted);text-align:center;line-height:1.5}
 
 /* TOAST */
 .toast{position:fixed;bottom:max(74px,calc(64px + env(safe-area-inset-bottom)));left:50%;transform:translateX(-50%) translateY(12px);background:var(--accent);color:#13140f;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:9px 18px;border-radius:20px;opacity:0;transition:all .25s;pointer-events:none;z-index:999;white-space:nowrap}
@@ -257,15 +276,23 @@ img,svg{max-width:100%}
 /* INSTALL */
 .install{margin:12px 16px 0;background:var(--surface);border:1px solid var(--accent);border-radius:14px;padding:11px 13px;display:flex;align-items:center;gap:9px;font-size:11px;color:var(--muted);line-height:1.4}
 .install strong{color:var(--accent);font-size:9px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:2px}
-.install-x{background:none;border:none;color:var(--muted);font-size:17px;cursor:pointer;margin-left:auto}
+.install-x{background:none;border:none;color:var(--muted);font-size:17px;cursor:pointer;margin-left:auto;flex-shrink:0}
 .empty{text-align:center;padding:24px 16px;color:var(--muted);font-size:11px}
+
+/* SUB BILLING ALERT */
+.billing-alert{background:var(--surface);border:1px solid var(--accent);border-radius:var(--r);padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.billing-alert-title{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.billing-alert-row{display:flex;align-items:center;justify-content:space-between;font-size:12px}
+.billing-alert-name{color:var(--text);font-weight:600}
+.billing-alert-amt{font-family:'DM Mono',monospace;font-size:11px;color:var(--purple)}
+.billing-alert-btn{background:var(--accent);color:#13140f;border:none;border-radius:9px;padding:5px 12px;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
 </style>
 </head>
 <body>
 
 <div class="hdr">
   <div class="hdr-l">
-    <div class="hdr-title">Budget</div>
+    <div class="hdr-title">Ascend</div>
     <div class="hdr-sub" id="hdrMonth">—</div>
   </div>
   <button class="hdr-btn" onclick="openSettings()">⚙</button>
@@ -321,6 +348,9 @@ img,svg{max-width:100%}
 <div class="page" id="page-dash">
   <div class="ptr" id="dashPtr"><span class="ptr-spin">↻</span> Actualizando…</div>
   <div class="pad">
+    <!-- Billing alerts -->
+    <div id="billingAlerts"></div>
+
     <!-- Double donut -->
     <div class="donut-card">
       <div class="donut-wrap">
@@ -333,32 +363,36 @@ img,svg{max-width:100%}
       <div class="cat-legend" id="donutLegend"></div>
     </div>
 
-    <!-- Stats -->
-    <div class="stats2">
-      <div class="scard full">
+    <!-- Stats: single-column layout, no overflow -->
+    <div class="stats-col">
+      <!-- Ahorros — full width -->
+      <div class="scard">
         <div class="slbl">Ahorros totales 🏦</div>
         <div class="sval" id="dSavings">—</div>
         <div class="ssub" id="dSavingsSub">—</div>
         <div class="savbox">
           <button class="savbtn" onclick="adjustSavings(-1)">−</button>
-          <input type="number" class="savin" id="savingsQuickInput" placeholder="0" inputmode="decimal" step="0.01">
+          <input type="number" class="savin" id="savingsQuickInput" placeholder="cantidad" inputmode="decimal" step="0.01">
           <button class="savbtn" onclick="adjustSavings(1)">＋</button>
-          <button class="savbtn" style="width:auto;padding:0 10px;font-size:11px;font-weight:700" onclick="setSavingsDirect()">OK</button>
+          <button class="savbtn ok" onclick="setSavingsDirect()">OK</button>
         </div>
       </div>
-      <div class="scard">
-        <div class="slbl">Deuda papá UDEM</div>
-        <div class="sval" id="dPapa" style="color:var(--success)">—</div>
-        <div class="savbox" style="margin-top:6px">
-          <button class="savbtn" onclick="adjustPapa(-1)">−</button>
-          <input type="number" class="savin" id="papaQuickInput" placeholder="0" inputmode="decimal" step="0.01">
-          <button class="savbtn" onclick="adjustPapa(1)">＋</button>
-          <button class="savbtn" style="width:auto;padding:0 10px;font-size:11px;font-weight:700" onclick="setPapaDirect()">OK</button>
+      <!-- Deuda + Restante side by side -->
+      <div class="stats-row">
+        <div class="scard">
+          <div class="slbl">Deuda papá UDEM</div>
+          <div class="sval" id="dPapa" style="color:var(--success)">—</div>
+          <div class="savbox">
+            <button class="savbtn" onclick="adjustPapa(-1)">−</button>
+            <input type="number" class="savin" id="papaQuickInput" placeholder="0" inputmode="decimal" step="0.01">
+            <button class="savbtn" onclick="adjustPapa(1)">＋</button>
+            <button class="savbtn ok" onclick="setPapaDirect()">OK</button>
+          </div>
         </div>
-      </div>
-      <div class="scard">
-        <div class="slbl">Restante mes</div>
-        <div class="sval" id="dLeft">—</div>
+        <div class="scard">
+          <div class="slbl">Restante mes</div>
+          <div class="sval" id="dLeft">—</div>
+        </div>
       </div>
     </div>
 
@@ -366,6 +400,13 @@ img,svg{max-width:100%}
     <div id="budBars" style="display:flex;flex-direction:column;gap:8px"></div>
     <div class="sec">Subscripciones</div>
     <div id="subsList" style="display:flex;flex-direction:column;gap:7px"></div>
+
+    <!-- Quick Log hint -->
+    <div style="text-align:center;padding:8px 0 4px">
+      <div style="font-size:10px;color:var(--muted);line-height:1.6">
+        💡 <strong style="color:var(--accent)">Quick Log:</strong> abre <code style="font-size:9px;background:var(--surface2);padding:2px 5px;border-radius:5px">Ajustes → Configurar Back Tap</code> para loguear al instante sin abrir la app.
+      </div>
+    </div>
   </div>
 </div>
 
@@ -411,7 +452,7 @@ img,svg{max-width:100%}
     <div id="planWeekView" style="display:none">
       <div class="week-summary" id="weekSummary"></div>
       <div class="sec">Esta semana</div>
-      <div class="scard full" style="display:flex;justify-content:space-between;align-items:center">
+      <div class="scard" style="display:flex;justify-content:space-between;align-items:center">
         <div><div class="slbl">Total semana</div><div class="sval" id="weekTotal">$0</div></div>
         <div style="text-align:right"><div class="slbl">Presupuesto</div><div class="sval acc" id="weekBudget">$0</div></div>
       </div>
@@ -485,6 +526,11 @@ img,svg{max-width:100%}
       <!-- GENERAL -->
       <div class="msec" id="ms-gen">
         <div class="addbox">
+          <div class="addtitle">⚡ Quick Log — Back Tap</div>
+          <div style="font-size:11px;color:var(--muted);line-height:1.6">Para loguear sin abrir la app desde la pantalla de bloqueo:<br>1. Abre <strong style="color:var(--text)">Ajustes → Accesibilidad → Toque → Toque posterior</strong><br>2. Elige <strong style="color:var(--text)">Doble toque</strong><br>3. Selecciona un Atajo de Siri<br>4. Crea un atajo que abra la URL:<br><code style="font-size:10px;background:var(--surface3);padding:3px 7px;border-radius:6px;color:var(--accent);word-break:break-all">https://gonzalofdz1.github.io/Ascend/#quicklog</code></div>
+          <button class="btnadd" onclick="openQuickLog()">Probar Quick Log ahora</button>
+        </div>
+        <div class="addbox">
           <div class="addtitle">Cierre de mes</div>
           <div style="font-size:11px;color:var(--muted);line-height:1.5">Sobrante + presupuesto Ahorro → se suman a tus ahorros totales.</div>
           <button class="btnmain" onclick="closeMonth(this,event)">Cerrar mes actual</button>
@@ -522,6 +568,23 @@ img,svg{max-width:100%}
       <button class="btnmain ghost" style="flex:1" onclick="closeEditModal()">Cancelar</button>
       <button class="btnmain" style="flex:2" onclick="saveEditTx(this,event)">Guardar cambios</button>
     </div>
+  </div>
+</div>
+
+<!-- ══ QUICK LOG MODAL ══ -->
+<div class="ql-modal-bg" id="qlModal" onclick="handleQlModalClick(event)">
+  <div class="ql-sheet">
+    <div class="ql-title">⚡ Quick Log</div>
+    <div class="ql-amount-row">
+      <span class="ql-peso">$</span>
+      <input type="number" class="ql-input" id="qlAmtInput" placeholder="0" step="0.01" inputmode="decimal" autofocus>
+    </div>
+    <div>
+      <div class="flabel">Categoría</div>
+      <div class="ql-catgrid" id="qlCatGrid"></div>
+    </div>
+    <button class="btnmain" onclick="submitQuickLog(this,event)">Guardar gasto</button>
+    <div class="ql-hint">Toca fuera para cerrar · Descripción: "Quick log"</div>
   </div>
 </div>
 
@@ -571,6 +634,7 @@ let S={
 };
 
 let selCat=null, selType='expense', editingTxId=null, editSelCat=null, planView='day';
+let qlSelCat=null;
 
 function save(){localStorage.setItem('bgt_v5',JSON.stringify(S))}
 function load(){const r=localStorage.getItem('bgt_v5');if(r){const p=JSON.parse(r);Object.assign(S,p)}else seedData()}
@@ -578,7 +642,6 @@ function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2
 
 function seedData(){
   S.transactions=[
-    // Julio 2026
     {id:uid(),date:'2026-07-09',desc:'Draftea',           cat:'Extras',amount:800,    type:'expense',udem:false},
     {id:uid(),date:'2026-07-09',desc:'Cine epic',         cat:'Sara',  amount:450,    type:'expense',udem:false},
     {id:uid(),date:'2026-07-09',desc:'Soriana cena',      cat:'Food',  amount:199.40, type:'expense',udem:false},
@@ -619,6 +682,10 @@ function init(){
   document.getElementById('savingsInput').value=S.savings||'';
   checkInstall();
   setupPullToRefresh();
+  // Handle #quicklog hash — open quick log immediately
+  if(window.location.hash==='#quicklog'){
+    setTimeout(()=>openQuickLog(),300);
+  }
 }
 
 function checkInstall(){if(!localStorage.getItem('install_ok')&&!window.navigator.standalone)document.getElementById('installBanner').style.display='flex'}
@@ -694,7 +761,6 @@ function setType(t){
   const btn=document.getElementById('submitBtn');
   btn.className='btnmain'+(t==='income'?' g':t==='papa'?' b':'');
   btn.textContent=t==='expense'?'Agregar gasto':t==='income'?'Agregar ingreso':'Ingreso papá (abona a UDEM)';
-  // Reset category selection
   document.querySelectorAll('#catGrid .cchip').forEach(el=>el.classList.remove('on'));
 }
 
@@ -721,7 +787,6 @@ function addTx(btn,e){
   selCat=null;
   document.querySelectorAll('#catGrid .cchip').forEach(el=>el.classList.remove('on'));
   renderDashboard();buildHistoryMonthSelect();
-  // Check warnings
   checkCatWarnings(cat,amt);
   const labels={expense:'Gasto guardado ✓',income:'Ingreso guardado ✓',papa:'Ingreso papá — UDEM actualizado ✓'};
   showToast(labels[selType]);
@@ -736,6 +801,72 @@ function checkCatWarnings(catId,newAmt){
   const pct=spent/cat.budget;
   if(pct>=1){showWarnToast(`⚠️ ${catId} excedido`,`Gastaste ${fmt(spent)} de ${fmt(cat.budget)}`)}
   else if(pct>=0.8){showWarnToast(`${catId} casi lleno`,`${Math.round(pct*100)}% usado — quedan ${fmt(cat.budget-spent)}`)}
+}
+
+// ══════════ QUICK LOG ══════════
+function openQuickLog(){
+  qlSelCat=null;
+  document.getElementById('qlAmtInput').value='';
+  buildQlCatGrid();
+  document.getElementById('qlModal').classList.add('open');
+  setTimeout(()=>document.getElementById('qlAmtInput').focus(),350);
+}
+function closeQuickLog(){
+  document.getElementById('qlModal').classList.remove('open');
+  qlSelCat=null;
+}
+function handleQlModalClick(e){if(e.target===document.getElementById('qlModal'))closeQuickLog()}
+function buildQlCatGrid(){
+  const g=document.getElementById('qlCatGrid');g.innerHTML='';
+  S.categories.filter(c=>c.id!=='Ahorro').forEach(c=>{
+    const el=document.createElement('div');
+    el.className='ql-cchip'+(qlSelCat===c.id?' on':'');
+    el.style.setProperty('--cc',c.color);
+    el.innerHTML=`<div class="ql-cico" style="background:color-mix(in srgb,${c.color} 22%,transparent)">${emo(c.id)}</div><div class="ql-clbl">${c.id}</div>`;
+    el.onclick=()=>{
+      qlSelCat=c.id;
+      document.querySelectorAll('.ql-cchip').forEach((e2,i)=>{
+        const cats=S.categories.filter(x=>x.id!=='Ahorro');
+        e2.classList.toggle('on',cats[i]&&cats[i].id===c.id);
+      });
+    };
+    g.appendChild(el);
+  });
+}
+function submitQuickLog(btn,e){
+  addRipple(btn,e);
+  const amt=parseFloat(document.getElementById('qlAmtInput').value);
+  if(!amt||amt<=0){showToast('Cantidad inválida',true);return}
+  if(!qlSelCat){showToast('Elige una categoría',true);return}
+  S.transactions.push({id:uid(),date:today(),desc:'Quick log',cat:qlSelCat,amount:amt,type:'expense',udem:false});
+  save();renderDashboard();buildHistoryMonthSelect();
+  closeQuickLog();
+  showToast(`${fmt(amt)} en ${qlSelCat} ✓`);
+}
+
+// ══════════ BILLING ALERTS ══════════
+function checkBillingAlerts(){
+  const now=new Date();
+  const todayDay=now.getDate();
+  const curM=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
+  const el=document.getElementById('billingAlerts');
+  const due=S.subscriptions.filter(s=>s.freq==='monthly'&&s.day===todayDay);
+  if(!due.length){el.innerHTML='';return}
+  // Check if already logged today
+  const alreadyLogged=s=>S.transactions.some(t=>t.date===today()&&t.desc===s.name&&t.type==='expense');
+  const pending=due.filter(s=>!alreadyLogged(s));
+  if(!pending.length){el.innerHTML='';return}
+  let html=`<div class="billing-alert"><div class="billing-alert-title">📅 Cobros de hoy</div>`;
+  pending.forEach(s=>{
+    html+=`<div class="billing-alert-row"><span class="billing-alert-name">${s.name}</span><span class="billing-alert-amt">${fmt(s.amount)}</span><button class="billing-alert-btn" onclick="logSubscription('${s.id}')">Loguear</button></div>`;
+  });
+  html+='</div>';
+  el.innerHTML=html;
+}
+function logSubscription(subId){
+  const s=S.subscriptions.find(x=>x.id===subId);if(!s)return;
+  S.transactions.push({id:uid(),date:today(),desc:s.name,cat:s.catId||'Subs',amount:s.amount,type:'expense',udem:false});
+  save();renderDashboard();buildHistoryMonthSelect();showToast(`${s.name} logueado ✓`);
 }
 
 // ══════════ DASHBOARD ══════════
@@ -778,6 +909,9 @@ function renderDashboard(){
   // Double donut
   drawDoubleDonut(expenses,left,totalBudget);
 
+  // Billing alerts
+  checkBillingAlerts();
+
   // Budget bars
   const barsEl=document.getElementById('budBars');barsEl.innerHTML='';
   S.categories.forEach(c=>{
@@ -807,7 +941,7 @@ function renderDashboard(){
     subsEl.innerHTML+=`<div class="subitem"><div class="subico">📱</div><div class="subinfo"><div class="subname">${s.name}</div><div class="submeta">${F[s.freq]||s.freq}${d} · ${s.catId}</div></div><div class="subamt">${fmt(s.amount)}</div></div>`;
   });
 
-  buildCatGrid(); // refresh warning badges
+  buildCatGrid();
 }
 
 // ══════════ DOUBLE DONUT ══════════
@@ -815,13 +949,12 @@ function drawDoubleDonut(expenses,left,totalBudget){
   const svg=document.getElementById('donutSvg');
   const legend=document.getElementById('donutLegend');
   const CX=100,CY=100;
-  const R_OUTER=88,SW_OUTER=12; // outer ring: remaining
-  const R_INNER=68,SW_INNER=10; // inner ring: spending by cat
+  const R_OUTER=88,SW_OUTER=12;
+  const R_INNER=68,SW_INNER=10;
 
   const totalSpent=expenses.reduce((s,t)=>s+t.amount,0);
   document.getElementById('donutCenter').textContent=fmt(left);
 
-  // Inner ring: spending by category
   const bycat={};
   S.categories.forEach(c=>{bycat[c.id]=0});
   expenses.forEach(t=>{if(bycat[t.cat]!==undefined)bycat[t.cat]+=t.amount});
@@ -830,7 +963,6 @@ function drawDoubleDonut(expenses,left,totalBudget){
   let paths=`<circle cx="${CX}" cy="${CY}" r="${R_OUTER}" fill="none" stroke="var(--surface2)" stroke-width="${SW_OUTER}"/>`;
   paths+=`<circle cx="${CX}" cy="${CY}" r="${R_INNER}" fill="none" stroke="var(--surface2)" stroke-width="${SW_INNER}"/>`;
 
-  // Outer ring: remaining (left / totalBudget)
   const outerC=2*Math.PI*R_OUTER;
   const leftPct=totalBudget>0?Math.max(0,Math.min(left/totalBudget,1)):0;
   const outerColor=left<0?'var(--danger)':left/totalBudget<0.2?'#f59e0b':'var(--success)';
@@ -838,7 +970,6 @@ function drawDoubleDonut(expenses,left,totalBudget){
     paths+=`<circle cx="${CX}" cy="${CY}" r="${R_OUTER}" fill="none" stroke="${outerColor}" stroke-width="${SW_OUTER}" stroke-dasharray="${leftPct*outerC} ${outerC}" stroke-dashoffset="0" stroke-linecap="butt"/>`;
   }
 
-  // Inner ring: spending segments
   let accumulated=0;
   const innerC=2*Math.PI*R_INNER;
   let legendHtml='';
@@ -871,17 +1002,14 @@ function setSavingsDirect(){
 function adjustPapa(dir){
   const v=parseFloat(document.getElementById('papaQuickInput').value)||100;
   if(dir>0){
-    // Adding to UDEM debt = new UDEM expense
     S.transactions.push({id:uid(),date:today(),desc:'Gasto UDEM',cat:'UDEM',amount:v,type:'expense',udem:true});
   } else {
-    // Paying down = papa payment
     S.transactions.push({id:uid(),date:today(),desc:'Pago papá',cat:'papa',amount:v,type:'papa',udem:false});
   }
   save();renderDashboard();buildHistoryMonthSelect();
   showToast(dir>0?`+${fmt(v)} a deuda UDEM`:`-${fmt(v)} abonado a deuda`);
 }
 function setPapaDirect(){
-  // Set the net UDEM debt to a specific value by adding an adjustment entry
   const target=parseFloat(document.getElementById('papaQuickInput').value);
   if(isNaN(target)||target<0){showToast('Cantidad inválida',true);return}
   const udemTx=S.transactions.filter(t=>t.udem||t.cat==='UDEM');
@@ -914,7 +1042,7 @@ function buildHistoryMonthSelect(){
 
 function renderHistory(){
   const month=document.getElementById('histSel').value;if(!month)return;
-  const mTx=S.transactions.filter(t=>t.date.startsWith(month)).sort((a,b)=>a.date.localeCompare(b.date)); // oldest first
+  const mTx=S.transactions.filter(t=>t.date.startsWith(month)).sort((a,b)=>a.date.localeCompare(b.date));
   const exp=mTx.filter(t=>t.type==='expense'),inc=mTx.filter(t=>t.type==='income');
   const ts=exp.reduce((s,t)=>s+t.amount,0),ti=inc.reduce((s,t)=>s+t.amount,0);
   document.getElementById('histChips').innerHTML=`
@@ -925,10 +1053,9 @@ function renderHistory(){
   const listEl=document.getElementById('txList');listEl.innerHTML='';
   if(!mTx.length){listEl.innerHTML='<div class="empty">Sin transacciones este mes</div>';return}
 
-  // Group by date (oldest first, so earliest date at top)
   const byDay={};
   mTx.forEach(tx=>{(byDay[tx.date]||(byDay[tx.date]=[])).push(tx)});
-  const sortedDates=Object.keys(byDay).sort(); // ascending
+  const sortedDates=Object.keys(byDay).sort();
 
   sortedDates.forEach(date=>{
     const group=document.createElement('div');
@@ -1051,7 +1178,6 @@ function renderPlan(){
   }
 
   if(planViewState==='week'){
-    // Find start of week (Sunday)
     const startOfWeek=new Date(now);startOfWeek.setDate(now.getDate()-dayOfWeek);
     let weekTotal=0,weekBudgetTotal=0;
     const wsEl=document.getElementById('weekSummary');wsEl.innerHTML='';
@@ -1215,7 +1341,7 @@ function exportCSV(){
     ['Ingresos','',mTx.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0)],
     [],['POR CATEGORÍA','Presupuesto','Gastado'],
     ...S.categories.map(c=>[c.id,c.budget,mTx.filter(t=>t.cat===c.id&&t.type==='expense').reduce((s,t)=>s+t.amount,0)])];
-  const csv='\uFEFF'+rows.map(r=>Array.isArray(r)?r.map(x=>`"${String(x??'').replace(/"/g,'""')}"`).join(','):String(r)).join('\n');
+  const csv='﻿'+rows.map(r=>Array.isArray(r)?r.map(x=>`"${String(x??'').replace(/"/g,'""')}"`).join(','):String(r)).join('\n');
   const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));
   a.download=`Budget_${month}.csv`;document.body.appendChild(a);a.click();document.body.removeChild(a);
   showToast('Excel exportado ✓');
