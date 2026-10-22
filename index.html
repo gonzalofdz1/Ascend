@@ -686,6 +686,10 @@ function init(){
   if(window.location.hash==='#quicklog'){
     setTimeout(()=>openQuickLog(),300);
   }
+  // Register service worker for offline support
+  if('serviceWorker' in navigator){
+    navigator.serviceWorker.register('./sw.js').catch(()=>{});
+  }
 }
 
 function checkInstall(){if(!localStorage.getItem('install_ok')&&!window.navigator.standalone)document.getElementById('installBanner').style.display='flex'}
